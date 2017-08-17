@@ -104,7 +104,7 @@ next
 fi
 
 log "Install other system Packages"
-PACKAGELIST="vim wget unzip expect nmap abrt tcpdump omping sysstat nc net-tools perl mlocate"
+PACKAGELIST="vim wget unzip expect nmap abrt tcpdump omping sysstat nc net-tools perl mlocate git dos2unix"
 for PACKAGE in $PACKAGELIST
 do
 	step "    Installing $PACKAGE"
