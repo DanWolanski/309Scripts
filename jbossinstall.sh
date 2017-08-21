@@ -128,7 +128,7 @@ next
 step "Updating addess information in standalone-sip.xml"
 echo "standalone-sip.xml before changes" &>> $LOG
 cat ${JBOSS_HOME}/standalone/configuration/standalone-sip.xml &>> $LOG
-try sed -i 's/:127.0.0.1/:dw-jboss/g' ${JBOSS_HOME}/standalone/configuration/standalone-sip.xml
+try sed -i 's/:127.0.0.1/:$(hostname -s)/g' ${JBOSS_HOME}/standalone/configuration/standalone-sip.xml
 echo "standalone-sip.xml after changes" &>> $LOG
 cat ${JBOSS_HOME}/standalone/configuration/standalone-sip.xml &>> $LOG
 next
@@ -198,7 +198,7 @@ next
 
 log "Updating dlgc_sample_demo.properties"
 step "    connector.sip.address"
-try sed -i "s/connector.sip.address=.*/connector.sip.address=$(hostname -i)/g" ${JBOSS_HOME}/standalone/configuration/Dialogic/dlgc_sample_demo.properties
+try sed -i "s/connector.sip.address=.*/connector.sip.address=$(hostname -i |cut -f 1 -d ' ')/g" ${JBOSS_HOME}/standalone/configuration/Dialogic/dlgc_sample_demo.properties
 next
 step "    connector.sip.port"
 try sed -i "s/connector.sip.port=.*/connector.sip.port=5080/g" ${JBOSS_HOME}/standalone/configuration/Dialogic/dlgc_sample_demo.properties
@@ -231,7 +231,7 @@ step "Updating mss to route INVITEs verification"
 sed -i "s/INVITE: (\"WebsocketSample\"/INVITE: (\"DialogicSampleDemo\"/g" ${JBOSS_HOME}/standalone/configuration/dars/mobicents-dar.properties
 next
 log "         **************************************************************************"
-log "         This can be updated at http://$(hostname -i):8080/sip-servlets-management/"
+log "         This can be updated at http://$(hostname -i|cut -f 1 -d ' '):8080/sip-servlets-management/"
 log "         **************************************************************************"
 
 if [ "x${WARFILE}" != "x" ] ; then
@@ -243,6 +243,6 @@ logger -t "$scriptname" "Script Complete, See $LOG for more details"
 echo
 log "Script Complete! "
 log "See $LOG for details"
-log -e "${RED}Please continue setup via the WebUI at http://$(hostname -i):8080 ${NC}"
+log -e "${RED}Please continue setup via the WebUI at http://$(hostname -i|cut -f 1 -d ' '):8080 ${NC}"
 log -e "JBOSS AS can be started via startjboss alias"
 echo
