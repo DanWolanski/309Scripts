@@ -81,7 +81,7 @@ while getopts 'ojdu:p:' flag; do
     #   log "Setting user to ${USERNAME}"
 	
 	;;
-    d) log "Setting to install desktop"
+    g) log "Setting to install GNOME desktop"
 	INSTALLGNOME='true'
 	;;
     *) error "Unexpected option ${flag}" ;;
@@ -114,6 +114,10 @@ done
 
 #update the mlocate db
 try updatedb
+
+step "Installing X11 enviornment"
+try yum groupinstall "X Window System"
+next
 
 echo
 step "Updating the kernel via yum"
