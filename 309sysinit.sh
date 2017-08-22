@@ -118,6 +118,10 @@ try updatedb
 step "Installing X11 enviornment"
 try yum groupinstall "X Window System"
 next
+log "         *********************************************************"
+log "         You can get X11/ssh server configured at:"
+log "                    https://www.youtube.com/watch?v=neWFnpRy6Ug      "
+log "         *********************************************************"
 
 echo
 step "Updating the kernel via yum"
