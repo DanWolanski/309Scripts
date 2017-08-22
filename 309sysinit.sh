@@ -123,6 +123,11 @@ log "         You can get X11/ssh server configured at:"
 log "                    https://www.youtube.com/watch?v=neWFnpRy6Ug      "
 log "         *********************************************************"
 
+step "Replacing /dev/random with /dev/urandom to prevent JVM blocking"
+try rm /dev/random
+try mknod /dev/random c 1 9
+next
+
 echo
 step "Updating the kernel via yum"
 yum -y update kernel &>> $LOG
