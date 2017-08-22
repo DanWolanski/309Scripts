@@ -115,14 +115,6 @@ done
 #update the mlocate db
 try updatedb
 
-step "Installing X11 enviornment"
-try yum groupinstall "X Window System"
-next
-log "         *********************************************************"
-log "         You can get X11/ssh server configured at:"
-log "                    https://www.youtube.com/watch?v=neWFnpRy6Ug      "
-log "         *********************************************************"
-
 step "Replacing /dev/random with /dev/urandom to prevent JVM blocking"
 try rm /dev/random
 try mknod /dev/random c 1 9
@@ -140,6 +132,14 @@ step "Performing yum update"
 yum -y update &>> $LOG
 next;
 
+
+step "Installing X11 enviornment"
+try yum groupinstall "X Window System"
+next
+log "         *********************************************************"
+log "         You can get X11/ssh server configured at:"
+log "                    https://www.youtube.com/watch?v=neWFnpRy6Ug      "
+log "         *********************************************************"
 
 log "Adding TCP firewall exclusions rules"
 TCPPORTS="5060 5061 7001 7002 8080 9990 5080 8787"
