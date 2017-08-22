@@ -134,7 +134,7 @@ next;
 
 
 step "Installing X11 enviornment"
-try yum groupinstall "X Window System"
+try yum -y groupinstall "X Window System"
 next
 log "         *********************************************************"
 log "         You can get X11/ssh server configured at:"
