@@ -128,7 +128,7 @@ next
 step "Updating addess information in standalone-sip.xml"
 echo "standalone-sip.xml before changes" &>> $LOG
 cat ${JBOSS_HOME}/standalone/configuration/standalone-sip.xml &>> $LOG
-try sed -i 's/:127.0.0.1/:$(hostname -s)/g' ${JBOSS_HOME}/standalone/configuration/standalone-sip.xml
+try sed -i "s/:127.0.0.1/:$(hostname -s)/g" ${JBOSS_HOME}/standalone/configuration/standalone-sip.xml
 echo "standalone-sip.xml after changes" &>> $LOG
 cat ${JBOSS_HOME}/standalone/configuration/standalone-sip.xml &>> $LOG
 next
