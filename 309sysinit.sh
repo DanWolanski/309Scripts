@@ -66,7 +66,7 @@ while getopts 'ojdu:p:' flag; do
   case "${flag}" in
     o) ASTYPE='occas7' 
 	USERNAME='occas7'
-	INSTALLGNOME='true'
+	#INSTALLGNOME='true'
 	JDKVER='jdk8'
 	;;
     j) ASTYPE='jboss' 
