@@ -59,7 +59,8 @@ logger -t "${scriptname}" "Starting 309 System Initilization via $scriptname scr
 ASTYPE='occas7'
 INSTALLGNOME='false'
 USERNAME='appserver'
-USERPASS='Demo17!!'
+YEAR=$(date +"%y")
+USERPASS=$(echo 'Demo'${YEAR}'!!')
 JDKVER='jdk8'
 
 while getopts 'ojdu:p:' flag; do
@@ -201,11 +202,23 @@ else
 fi
 next
 
+step "Copy installer to user directory"
+try cp occasinstall.sh jbosinstall.sh /home/${USERNAME}
+next
+
+step "Setting /etc/security limits"
+try sed -i '/.*EOF/d' /etc/security/limits.conf && echo "* soft nofile 16384" >> /etc/security/limits.conf && echo "* hard nofile 16384" >> /etc/security/limits.conf && echo "# EOF"  >> /etc/security/limits.conf
+next
+
+step "Change the rmrm_max kernel parameters"
+try echo "net.core.rmem_max=4192608" >> /etc/sysctl.conf && echo "net.core.wmem_max=4192608" >> /etc/sysctl.conf && sysctl -e -p /etc/sysctl.conf
+next
+
 step "Fetching ${JDKVER} list from oracle web"
 if [ $JDKVER == "jdk8" ] ; then
-LATESTJDK=$(curl -s http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html | grep -oP 'http://download.oracle.com/otn-pub/java/jdk/8u.*?/jdk-8u.*?-linux-x64.rpm' | tail -1)
+LATESTJDK=$(curl -s -L http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html | grep -oP 'http://download.oracle.com/otn-pub/java/jdk/8u.*?/jdk-8u.*?-linux-x64.rpm' | tail -1)
 else
-LATESTJDK=$(curl -s http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html | grep -oP 'http://download.oracle.com/otn/java/jdk/7u.*?/jdk-7u.*?-linux-x64.rpm' | head -1)
+LATESTJDK=$(curl -s -L http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html | grep -oP 'http://download.oracle.com/otn/java/jdk/7u.*?/jdk-7u.*?-linux-x64.rpm' | head -1)
 fi
 next
 log "    Latest jdk detected as:" 
